@@ -1,7 +1,7 @@
 {
-  "name": "stms-backend",
+  "name": "backend-stms",
   "version": "1.0.0",
-  "description": "Smart Traffic Management System Backend",
+  "description": "Smart Traffic Management Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
