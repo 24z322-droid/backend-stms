@@ -10,81 +10,78 @@ app.use(express.json())
 
 const PORT = process.env.PORT || 5000
 
-// Home
+
+
+// Home route
 app.get("/", (req,res)=>{
 res.send("STMS Backend Running")
 })
 
 
-// Get traffic data
-app.get("/traffic", (req,res)=>{
+
+// Traffic Dashboard API
+app.get("/traffic",(req,res)=>{
 
 res.json({
-success:true,
-data:traffic
+roadA: traffic.roadA,
+roadB: traffic.roadB,
+roadC: traffic.roadC
 })
 
 })
 
 
-// Find route
+
+// Route Suggestion API
 app.post("/route",(req,res)=>{
 
-const {from,to}=req.body
+const {from,to} = req.body
 
-const routes=[
-"Route A - Fastest",
-"Route B - Less Traffic",
-"Route C - Alternative"
+const routes = [
+
+"Route A (Fastest)",
+
+"Route B (Less Traffic)",
+
+"Route C (Alternative Road)"
+
 ]
 
-const random=routes[Math.floor(Math.random()*routes.length)]
+const randomRoute = routes[Math.floor(Math.random()*routes.length)]
 
 res.json({
-success:true,
-from,
-to,
-bestRoute:random
-})
+
+from: from,
+to: to,
+route: randomRoute
 
 })
 
-
-// Traffic report
-app.get("/report",(req,res)=>{
-
-res.json({
-roadA:traffic.roadA,
-roadB:traffic.roadB,
-roadC:traffic.roadC
 })
 
-})
 
 
 // Admin update traffic
-app.post("/admin/update",(req,res)=>{
+app.post("/updateTraffic",(req,res)=>{
 
-const {road,level}=req.body
+const {road,level} = req.body
 
-if(traffic[road]!==undefined){
+traffic[road] = level
 
-traffic[road]=level
+res.json({
 
-return res.json({
 message:"Traffic Updated",
+
 traffic
-})
 
-}
-
-res.status(400).json({
-message:"Invalid Road"
 })
 
 })
+
 
 
 app.listen(PORT,()=>{
+
 console.log("Server running on port",PORT)
+
 })
